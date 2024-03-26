@@ -1,3 +1,9 @@
+# Setup
+We find the most relevant papers by scraping arxiv for the most recent and most cited papers that contain the users query string. We then pass all of the metadata on these papers (title, authors, url, etc) into the Claude API, and prompt Claude to tell us the most relevant paper to the user's query. We then take this relevant paper, and use Claude again to extract the key insights from the parsed text of this paper. Using some careful prompt engineering, we’ve managed to get Claude to also return references for each key insight it provides. These insights allow us to establish relationships between papers and concepts, and create that “knowledge/concept graph” that we create our user experience around. We can then recursively parse referenced papers from the first paper, create key insights (with sources) and continue building out the knowledge graph based on what concepts the user decides to look into. We then store this graph on a Firestore DB and display it as a set of nodes on the frontend using D3. Lastly, when the user wants to learn more about the concept/insight represented by a single one of those nodes, we query Claude again (with the parsed paper text and concept description as context) to give us an expanded, informative, and educational description of the concept. This is then rendered on the left hand side of the user's DOM.
+
+Front-end built in React JS using D3, backend built in Python using FastAPI, arxiv (a third-party scraper), and the Anthropic Claude 2 API, both the server and the DB are hosted on firebase.
+
+---
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
